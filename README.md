@@ -20,3 +20,13 @@ uno svantaggio potrebbe essere la distanza dalle discoteche <br>
 **problema:** Se devi seguire il profilo del tuo fidanzato/a o devi iscriverti a un sito che non ritieni affidabile? <br>
 **soluzione:** Un'applicazione che ti permette di generare una foto, un nome, cognome e altri dati di una persona che non esite <br>
 **Strumenti SW da utilizzare:** AI che genera la foto e prende a caso nomi e congomi reali da un database
+
+## Booking App
+**problema:** Ogni ristorante ha il suo metodo di prenotazione e il suo menù <br>
+**soluzione:** Un luogo dove poter prenotare facilmente per un negozio e poter ordinare il cibo prima di arrivare al ristorante così da avere il cibo pronto appena arrivati<br>
+**Strumenti SW da utilizzare: db**
+
+## Mini Centrale 
+**problema:** Imprecisione del meteo per le città grandi <br>
+**soluzione:** Piccola centrale metereologica per la casa da mettere sul balcone, controllabile da telefono e puó essere collegata e impostata per far eseguire certe funzioni a determinati valori<br>
+**Strumenti SW da utilizzare: Arduino, vari sensori per letture, scheda wifi, db** 
