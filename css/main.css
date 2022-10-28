@@ -1,0 +1,17 @@
+* {
+    font-family: "Calibri";
+}
+
+.first {
+    border: 2px solid black;
+    width: 250px;
+    margin: 10px;
+}
+
+div div {
+    margin: 10px;
+}
+
+div div > * {
+    margin: 0;
+}
