@@ -1,0 +1,4 @@
+sfondo: #36393f
+menu: #2f3136
+barra: #202225
+icon: #4f545c
