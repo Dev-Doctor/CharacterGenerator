@@ -9,6 +9,7 @@
     <!–– JAVASCRIPT LINKS -->
     <script src="js/character_SPECIAL.js"></script>
     <script src="js/character_traits.js"></script>
+    <script src="js/identity.js"></script>
     <script src="js/sample_names.js"></script>
     <title>Document</title>
 </head>
@@ -32,6 +33,14 @@
             <button onclick="TRAITS.Generate()">Generate</button>
         </div>
     </div>
+
+    <div class="first">
+        <div>
+            <p>Generate Name by Race and Gender</p>
+            <button onclick="IDENTITY.Generate(VALUES.names)">Generate</button>
+        </div>
+    </div>
+
 <body>
     
 </body>
