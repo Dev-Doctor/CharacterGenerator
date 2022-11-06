@@ -15,20 +15,27 @@
     <nav class="header">
 
         <div class="header-content-site">
-            <img class="header-icon" src="/icon_dark.png">
+            <a href="/home.html"><img class="header-icon" src="/icon_dark.png"></a>
             <div class="header-name centered">Character Generator</div>
         </div>
 
         <div class="header-content-menu">
-            <img class="header-icon" src="/white_menu.png">
+            <img class="header-menu" src="/white_menu.png" onclick="openNav()">
         </div>
 
     </nav>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#">Contact</a>
+      </div>
 
     <div class="main">
 
         <div class="main-logo">
-            <img class="main-icon" src="/icon_light.png">
+            <img class="main-icon" src="/icon_light_copyright.png">
         </div>
 
         <div class="main-lore justified">
@@ -47,12 +54,13 @@
                 est laborum.
             </p>
         </div>
-
-        <div class="get-started centered" id="getStarted">
-            <p>
-                Get Started
-            </p>
-        </div>
+        <a href="/generator.html" class="a-started">
+            <div class="get-started centered" id="getStarted">
+                <p>
+                    Get Started
+                </p>
+            </div>
+        </a>
 
     </div>
 

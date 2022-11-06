@@ -1,11 +1,18 @@
 body{
-    background-color: #36393f;
+    font-family: 'Courier New', monospace;
+    background-image: url("/background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     margin:0;
     display: flex;
     flex-direction: column;
 }
 
 .header{
+    font-family: 'Brush Script MT';
+    font-size: larger;
     position: fixed;
     top: 0;
     left: 0;
@@ -46,8 +53,61 @@ body{
     text-align: center;
 }
 
+.header-menu{
+    height: 100%;
+}
+
+.header-menu:hover{
+    background-color: #111;
+    cursor: pointer;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #202225;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  
+  .sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+
 .main{
-    margin-top: 6vh;
+    border: 15px double #202225;
+    width: 90vh;
+    height: 50vh;
+    margin:auto;
+    background-color: #36393f;
+    margin-top: 25vh;
     display: flex;
     flex-direction: column;
     color:#ffffff;
@@ -72,7 +132,23 @@ body{
     width: 60vh;
 }
 
+  .a-started:link, .a-started:visited,.a-started:active {
+    background-color: #36393f;
+    color: white;
+    border: 3px solid #202225;
+    padding: 1vh;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .a-started:hover {
+    background-color: #202225;
+  }
+
 .get-started{
+    color: white;
+    width: 15vh;
     cursor: pointer;
 }
 
