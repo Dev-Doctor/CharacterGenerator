@@ -9,10 +9,10 @@
  * @return {Number} $conn L'oggetto della connessione al database
  */
 function CreateConnection() {
-    $servername = "localhost";
-    $username = "root";
+    $servername = "localhost"; 
+    $username = "root"; 
     $password = "";
-    $db_name = "character_generator";
+    $db_name = "characters_generator";
 
     $conn = mysqli_connect($servername, $username, $password, $db_name);
 

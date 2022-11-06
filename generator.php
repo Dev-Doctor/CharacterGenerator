@@ -4,26 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!–– CSS LINK -->
+    <!-- ICO -->
+    <link rel="icon" href="">
+    <!-- CSS LINK -->
     <link rel="stylesheet" href="css/main.css">
-    <!–– JAVASCRIPT LINKS -->
-    <script src="js/character_SPECIAL.js"></script>
+    <!-- JAVASCRIPT LINKS -->
+    <script src="js/ability_scores.js"></script>
     <script src="js/character_traits.js"></script>
-    <script src="js/identity.js"></script>
     <script src="js/sample_names.js"></script>
+    <script src="js/character.js"></script>
     <title>Document</title>
 </head>
     <?php
         include 'php/connect.php';
         include 'php/functions.php';
-
+        include 'php/character.php';
+        
         $conn = CreateConnection();
+
+        //GetTraits($conn, 1);
+        $character = new Character();
+        $character->Generate();
     ?>
 
     <div class="first">
         <div>
-            <p>Generate the S.P.E.C.I.A.L.</p>
-            <button onclick="SPECIAL.Generate()">Generate</button>
+            <p>Generate the Ability Scores</p>
+            <button onclick="ABILITY_SCORES.Determed()">Generate With Determed</button>
+            <button onclick="ABILITY_SCORES.Generate()">Generate With 4d6</button>
         </div>
     </div>
 
@@ -34,13 +42,7 @@
         </div>
     </div>
 
-    <div class="first">
-        <div>
-            <p>Generate Name by Race and Gender</p>
-            <button onclick="IDENTITY.Generate(VALUES.names)">Generate</button>
-        </div>
-    </div>
-
+    <a href="index.html"><p>Home</p></a>
 <body>
     
 </body>

@@ -3,7 +3,7 @@
     *** LEGGI SE HAI BISOGNO DI SAPERE COME IMPLEMENTARE ***
 
     in 'index.php' aggiungi alla tua funzione "VALUES.names" come attributo alla chiamata della funzione che riporta al tuo file
-    quando poi nel file devi usare questo oggetto fai: -> names().RAZZA.NOME[posizione] -> esempio: "names().elf.male[6]" -> restituisce il 7 nome degli elfi nell'array dei nomi maschili che è "Aeson"
+    quando poi nel file devi usare questo oggetto fai: -> names.RAZZA.NOME[posizione] -> esempio: "names.elf.male[6]" -> restituisce il 7 nome degli elfi nell'array dei nomi maschili che è "Aeson"
 */
 
 const VALUES = {
