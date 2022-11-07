@@ -40,6 +40,23 @@ function ExecuteQuery($conn, $query) {
     return $conn->query($query);
 }
 
+function GetRace($conn, $name) {
+	if ($name == '') {
+		$myQuery = "SELECT * FROM `races` ORDER BY RAND() LIMIT 1;";
+	} else {
+		$myQuery = "SELECT * FROM `races` WHERE races.Name = '$name'";
+	}
+    $that = $conn->query($myQuery);
+    if ($that->num_rows > 0) {
+        // output data of each row
+        while ($row = $that->fetch_assoc()) {
+            echo "id: " . $row["ID"] . " name: " . $row["Name"] . " maxAge: " . $row["MaxAge"] . " maxWeight: " . $row["MaxWeight"] . " maxHeight: " . $row["MaxHeight"] ."<br>";
+        }
+    } else {
+        echo "0 results";
+    }
+}
+
 /* -------- QUERIES -------- */
 // get all racial traits with race => SELECT * FROM `racial_traits` WHERE race = 1
 // get all traits with race => SELECT races.ID, traits.BaseHeight, traits.HeightModifier, traits.BaseWeight, traits.WeightModifier, traits.size FROM races INNER JOIN traits ON races.ID=traits.ID WHERE races.ID = 1
