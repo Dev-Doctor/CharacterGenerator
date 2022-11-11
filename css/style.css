@@ -156,3 +156,50 @@ body{
     text-align: justify;
     text-justify: inter-word;
 }
+.generator-height{
+  height: 100vh;
+}
+
+.generator{
+  width: 80%;
+  height: 70%;
+  display: flex;
+  flex-direction:row;
+  color:#ffffff;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  padding: 5px; 
+}
+
+.generator-type{
+  font-size: 4em;
+  height: 30%;
+}
+
+.generator-logo{
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.generator-icon{
+  width: 20vh;
+  height: auto;
+}
+
+.generator-main{
+  left:0;
+  width: 45%;
+}
+
+.generator-special{
+  right:0;
+  width: 45%;
+}
+
+.generator-qr{
+  border: 10px double #202225;
+  width:min-content;
+}
