@@ -44,7 +44,7 @@ function GetRace($conn, $name) {
 	if ($name == '') {
 		$myQuery = "SELECT * FROM `races` ORDER BY RAND() LIMIT 1;";
 	} else {
-		$myQuery = "SELECT * FROM `races` WHERE races.Name = '$name'";
+		$myQuery = "SELECT * FROM `races` WHERE races.name = '$name'";
 	}
     $that = $conn->query($myQuery);
     if ($that->num_rows > 0) {

@@ -19,7 +19,7 @@
         include 'php/connect.php';
         include 'php/functions.php';
         include 'php/character.php';
-        
+
         $conn = CreateConnection();
 
         //GetTraits($conn, 1);
@@ -30,8 +30,8 @@
     <div class="first">
         <div>
             <p>Generate the Ability Scores</p>
-            <button onclick="ABILITY_SCORES.Determed()">Generate With Determed</button>
-            <button onclick="ABILITY_SCORES.Generate()">Generate With 4d6</button>
+            <button onclick="alert('not working for now')">Generate With Determed</button>
+            <button onclick="alert('not working for now')">Generate With 4d6</button>
         </div>
     </div>
 

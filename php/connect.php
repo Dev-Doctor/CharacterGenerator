@@ -1,5 +1,6 @@
 <?php
-
+require "LoadEnv.php";
+(new LoadEnv(__DIR__ . '/.env'))->load();
 /**
  * @author DevDoctor
  */
@@ -9,11 +10,11 @@
  * @return {Number} $conn L'oggetto della connessione al database
  */
 function CreateConnection() {
-    $servername = "localhost"; 
-    $username = "root"; 
-    $password = "";
-    $db_name = "characters_generator";
-
+    
+    $servername = getenv('SERVER'); //locahost
+    $username = getenv('USER');  //root
+    $password = getenv('PASSWORD');
+    $db_name = getenv('DATABASE_NAME'); //characters_generator
     $conn = mysqli_connect($servername, $username, $password, $db_name);
 
     if (!$conn) {
