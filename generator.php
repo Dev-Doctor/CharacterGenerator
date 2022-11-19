@@ -19,12 +19,17 @@
         include 'php/connect.php';
         include 'php/functions.php';
         include 'php/character.php';
+        include 'php/identity.php';
 
         $conn = CreateConnection();
 
         //GetTraits($conn, 1);
         $character = new Character();
         $character->Generate();
+
+        // Prova generatore nome e cognome
+        $genNames = new GenerateNames($conn);
+        //
     ?>
 
     <div class="first">
