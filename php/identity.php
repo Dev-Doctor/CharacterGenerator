@@ -2,89 +2,99 @@
 class GenerateNames
 {
 
+  private $name = "";
+
+  private $lastname = "";
+
   /**
    *  Costruttore
    * @param {} conn
-   * @return {String[]} ritorna un array di tipo stringa con in posizione 0 il nome e in posizione 1 il cognome 
    */
-  function __construct($conn)
+  function __construct($conn, $race, $gender)
   {
-    // Dati che verranno generati da un alta parte e passati
-    $race = 2;
-    $gender = 1;
-    //
-
-    $name = $this->generateName($conn, $race, $gender);
-    if ($name == -30) {
+    $this->name = $this->generateName($conn, $race, $gender);
+    if ($this->name == -30) {
       echo "Nessun nome";
       return -30;
     }
 
-    echo ("Name: " . $name);
-
-    /*$lastname = $this->generateLastname($conn, $race);
-    if ($lastname == -30) {
+    $this->lastname = $this->generateLastname($conn, $race);
+    if ($this->lastname == -30) {
       echo "Nessun cognome";
       return -30;
-    }*/
+    }
   }
 
   /**
    *  Genera il nome in base alla razza e il genere
    * @param {} conn
-   * @param {String} race razza del personaggio
-   * @param {String} gender genere del personaggio
+   * @param {Int} race razza del personaggio
+   * @param {Int} gender genere del personaggio
    * @return {String} ritorna il nome del personaggio
    */
-  function generateName($conn, $race, $gender)
+  private function generateName($conn, $race, $gender)
   {
-    // Faccio una query di tutti i nomi di una determinata razza e genere
-    $queryNames = "SELECT * FROM names WHERE race = '$race' AND gender = '$gender'";
-    $resultNames = $conn->query($queryNames);
+    // Faccio una query di tutti i nomi di una determinata razza e genere, li randomizzo e ne prendo 1
+    $queryName = "SELECT * FROM names WHERE race = '$race' AND gender = '$gender' ORDER BY RAND() LIMIT 1";
+    $resultName = $conn->query($queryName);
     // Contollo che il numero di nomi trovati sia maggiore di 0
-    if ($resultNames->num_rows <= 0) {
-      return -30;
-    }
-    
-    // Prendo l'ID del primo nome trovato che sarà il numero minimo nel random
-    $IDstart = $resultNames->fetch_assoc()["ID"];
-
-    // Random inter $min = $IDstart(ID del primo nome di $queryNames),
-    // $max = $IDstart + $resultNames->num_rows(numero di nomi trovati nella query $queryNames) - 1
-    $randInt = random_int($IDstart, $IDstart + $resultNames->num_rows - 1);
-
-    // Query 2
-    $queryNameFromNames = "SELECT * FROM ($queryNames) AS q1 WHERE ID = '$randInt'";
-    $resultName = $conn->query($queryNameFromNames);
-    // Contollo che il numero di nomi trovati sia 1
-    if ($resultName->num_rows != 1) {
+    if ($resultName->num_rows <= 0) {
       return -30;
     }
 
-    /*$row = $resultName->fetch_assoc();
-    $this->console_log($resultName->fetch_assoc());
-    echo "ID: " . $row["ID"] . " - Name: " . $resultName->fetch_assoc()["name"] . "<br>";*/
-
-    // Return del nome con ID casuale
+    // Return del nome
     return $resultName->fetch_assoc()["name"];
   }
 
   /**
    * Genera il cognome in base alla razza
    * @param {} conn
-   * @param {String} race razza del personaggio
+   * @param {Int} race razza del personaggio
    * @return {String} ritorna il cognome del personaggio
    */
-  function generateLastname($conn, $race)
+  private function generateLastname($conn, $race)
   {
-    return "";
+    // Faccio una query di tutti i cognomi di una determinata razza e genere, li randomizzo e ne prendo 1
+    $queryLastnames = "SELECT * FROM lastnames WHERE race = '$race' ORDER BY RAND() LIMIT 1";
+    $resultLastnames = $conn->query($queryLastnames);
+    // Contollo che il numero di cognomi trovati sia maggiore di 0
+    if ($resultLastnames->num_rows <= 0) {
+      return -30;
+    }
+
+    // Return del cognome
+    return $resultLastnames->fetch_assoc()["lastname"];
+  }
+
+  /**
+   * Ritorna il nome generato
+   * @return {String} ritorna il nome del personaggio
+   */
+  public function getName()
+  {
+    if ($this->name == "") {
+      return "Non ancora generato.";
+    }
+    return $this->name;
+  }
+
+  /**
+   * Ritorna il cognome generato
+   * @return {String} ritorna il cognome del personaggio
+   */
+  public function getLastname()
+  {
+    if ($this->lastname == "") {
+      return "Non ancora generato.";
+    }
+    return $this->lastname;
   }
 
   /**
    *  Funzione per debug, scrive su console
    * @param {} output è il messaggio da scrivere
    */
-  function console_log($output, $with_script_tags = true)
+  public function console_log($output, $with_script_tags = true)
   {
     $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) . ');';
     if ($with_script_tags) {

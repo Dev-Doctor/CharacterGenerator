@@ -9,10 +9,8 @@
     <!-- CSS LINK -->
     <link rel="stylesheet" href="css/main.css">
     <!-- JAVASCRIPT LINKS -->
-    <script src="js/ability_scores.js"></script>
     <script src="js/character_traits.js"></script>
     <script src="js/sample_names.js"></script>
-    <script src="js/character.js"></script>
     <title>Document</title>
 </head>
     <?php
@@ -28,7 +26,12 @@
         $character->Generate();
 
         // Prova generatore nome e cognome
-        $genNames = new GenerateNames($conn);
+        $race = 2;
+        $gender = 1;
+        $genNames = new GenerateNames($conn,$race,$gender);
+
+        echo ("Name: " . $genNames->getName() . "<br>");
+        echo ("Lastname: " . $genNames->getLastname(). "<br>");
         //
     ?>
 
