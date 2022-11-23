@@ -18,12 +18,15 @@
         include 'php/functions.php';
         include 'php/character.php';
         include 'php/identity.php';
+        include 'php/traits.php';
 
         $conn = CreateConnection();
 
         //GetTraits($conn, 1);
         $character = new Character();
         $character->Generate();
+        $traits = new traits();
+        $traits->Generate($conn, 1);
 
         // Prova generatore nome e cognome
         $race = 2;
