@@ -80,7 +80,7 @@ class GenerateNames {
    */
   public function getName() {
     if ($this->name == "") {
-      return "Non ancora generato.";
+      return "Non ancora generato o dato nel DB non presente.";
     }
     return $this->name;
   }
@@ -91,7 +91,7 @@ class GenerateNames {
    */
   public function getLastname() {
     if ($this->lastname == "") {
-      return "Non ancora generato.";
+      return "Non ancora generato o dato nel DB non presente.";
     }
     return $this->lastname;
   }

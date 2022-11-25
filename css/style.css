@@ -116,6 +116,11 @@ body{
     justify-content: center;
 }
 
+#generated{
+  height: 75vh;
+  margin-top: 6%;
+}
+
 .main-logo{
     display: flex;
     align-content: center;
