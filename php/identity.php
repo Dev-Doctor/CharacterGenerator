@@ -1,26 +1,35 @@
 <?php
-class GenerateNames
-{
+class GenerateNames {
 
   private $name = "";
-
   private $lastname = "";
+  private $conn;
+  private $race;
+  private $gender;
 
   /**
    *  Costruttore
    * @param {} conn
    */
-  function __construct($conn, $race, $gender)
-  {
-    $this->name = $this->generateName($conn, $race, $gender);
+  function __construct($conn) {
+    $this->conn = $conn;
+  }
+
+  public function SetParams($race, $gender) {
+    $this->race = $race;
+    $this->gender = $gender;
+  }
+
+  public function Generate() {
+    $this->name = $this->generateName($this->conn, $this->race, $this->gender);
     if ($this->name == -30) {
-      echo "Nessun nome";
+      //echo "Nessun nome";
       return -30;
     }
 
-    $this->lastname = $this->generateLastname($conn, $race);
+    $this->lastname = $this->generateLastname($this->conn, $this->race);
     if ($this->lastname == -30) {
-      echo "Nessun cognome";
+      //echo "Nessun cognome";
       return -30;
     }
   }
@@ -52,8 +61,7 @@ class GenerateNames
    * @param {Int} race razza del personaggio
    * @return {String} ritorna il cognome del personaggio
    */
-  private function generateLastname($conn, $race)
-  {
+  private function generateLastname($conn, $race) {
     // Faccio una query di tutti i cognomi di una determinata razza e genere, li randomizzo e ne prendo 1
     $queryLastnames = "SELECT * FROM lastnames WHERE race = '$race' ORDER BY RAND() LIMIT 1";
     $resultLastnames = $conn->query($queryLastnames);
@@ -70,8 +78,7 @@ class GenerateNames
    * Ritorna il nome generato
    * @return {String} ritorna il nome del personaggio
    */
-  public function getName()
-  {
+  public function getName() {
     if ($this->name == "") {
       return "Non ancora generato.";
     }
@@ -82,8 +89,7 @@ class GenerateNames
    * Ritorna il cognome generato
    * @return {String} ritorna il cognome del personaggio
    */
-  public function getLastname()
-  {
+  public function getLastname() {
     if ($this->lastname == "") {
       return "Non ancora generato.";
     }
@@ -94,8 +100,7 @@ class GenerateNames
    *  Funzione per debug, scrive su console
    * @param {} output è il messaggio da scrivere
    */
-  public function console_log($output, $with_script_tags = true)
-  {
+  public function console_log($output, $with_script_tags = true) {
     $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) . ');';
     if ($with_script_tags) {
       $js_code = '<script>' . $js_code . '</script>';

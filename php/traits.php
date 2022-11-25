@@ -1,12 +1,18 @@
 <?php
 include 'php/dice.php';
-class traits{
+class Traits {
     private $height;
     private $weight;
     private $age;
     private $eyes;
     private $skin;
     private $hair;
+
+    private $conn;
+
+    function __construct($conn) {
+        $this->conn = $conn;
+    }
 
     /**
      * Trasforma un array JSON in un array PHP
@@ -28,9 +34,9 @@ class traits{
      * @param  {Number} raceID ID della razza all'interno del database
      * @return {Object} array contenente tutti i tratti appena generati
      */
-    function Generate($conn, $raceID){
-        $myQuery = "SELECT races.ID, traits.BaseHeight, traits.HeightModifier, traits.BaseWeight, traits.WeightModifier, traits.MinAge, traits.MaxAge, traits.eyes_colors, traits.skin_colors, traits.hair_colors FROM races INNER JOIN traits ON races.ID=traits.ID WHERE races.ID = " . $raceID;
-        $that = $conn->query($myQuery);
+    function Generate($raceID){
+        $myQuery = "SELECT races.ID, traits.BaseHeight, traits.HeightModifier, traits.BaseWeight, traits.WeightModifier, traits.MinAge, traits.MaxAge, traits.eyes_colors, traits.skin_colors, traits.hair_colors FROM races INNER JOIN traits ON races.traits=traits.ID WHERE races.ID = " . $raceID;
+        $that = $this->conn->query($myQuery);
         $race = $that->fetch_assoc();
 
         $this->age=rand($race["MinAge"], $race["MaxAge"]);
@@ -47,7 +53,7 @@ class traits{
         }else{
             $this->hair=$colors[rand(0, count($colors)-1)];
         }
-  
+        
         $dice = new dice();
         $this->height=$race["BaseHeight"]+$dice->roll($race["HeightModifier"]);
         $this->weight=$race["BaseWeight"]*$dice->roll($race["WeightModifier"]);
