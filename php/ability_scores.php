@@ -29,7 +29,7 @@ class Ability_Scores {
             for ($i = 0; $i < sizeof($dice_rolls); $i++) {
                 $result += $dice_rolls[$i];
             }
-        } while ($result < 7);
+        } while ($result < 8);
         return $result;
     }
 

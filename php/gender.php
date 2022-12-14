@@ -9,4 +9,11 @@ class Gender {
     function GetGenderNumber() {
         return $this->gender;
     }
+
+    function GetGender() {
+        if($this->gender) {
+            return "male";
+        } 
+        return "female";
+    }
 }

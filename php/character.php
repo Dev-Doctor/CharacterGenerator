@@ -5,7 +5,7 @@ include 'race_select.php';
 include 'gender.php';
 include 'traits.php';
 
-class Character {    
+class Character {
     private $ability_scores;
     private $idenity;
     private $race;
@@ -25,41 +25,71 @@ class Character {
 
     public function Generate() {
         /* --------------- GENERATE ABILITY SCORES --------------- */
-        echo "Ability Scores -> ";
-        if(rand(0, 1)) {
-            echo "Determed -> ";
+        if (rand(0, 1)) {
+            //echo "Determed -> ";
             $this->ability_scores->GenerateDetermed();
         } else {
-            echo "Random -> ";
+            //echo "Random -> ";
             $this->ability_scores->Generate();
         }
-        echo $this->ability_scores->Visualize();
-        /* --------------- GENERATE RACE --------------- */ echo "<br>";
+
+        /* --------------- GENERATE RACE --------------- */
         $this->race->PickRace();
-        echo $this->race->GetRaceID() . " | " . $this->race->GetRaceName();
-        /* --------------- GENERATE GENDER --------------- */ echo "<br>";
-        echo $this->gender->GetGenderNumber();
-        /* --------------- GENERATE NAME AND LASTNAME --------------- */ echo "<br>";
-        if($this->race->GetRaceMainRaceID() == null) {
+        //echo $this->race->GetRaceID() . " | " . $this->race->GetRaceName();
+
+        /* --------------- GENERATE GENDER --------------- */
+        //echo $this->gender->GetGenderNumber();
+
+        /* --------------- GENERATE NAME AND LASTNAME --------------- */
+        if ($this->race->GetRaceMainRaceID() == null) {
             $this->identity->SetParams($this->race->GetRaceID(), $this->gender->GetGenderNumber());
         } else {
             $this->identity->SetParams($this->race->GetRaceMainRaceID(), $this->gender->GetGenderNumber());
         }
         $this->identity->SetParams(16, $this->gender->GetGenderNumber()); /* !!! PROBLEM !!! */
         $this->identity->Generate();
-        echo "Name: " . $this->identity->getName() . " | Lastname: " . $this->identity->getLastname();
-        /* --------------- GENERATE TRAITS --------------- */ echo "<br>";
+        //echo "Name: " . $this->identity->getName() . " | Lastname: " . $this->identity->getLastname();
+
+        /* --------------- GENERATE TRAITS --------------- */
         $this->traits->Generate($this->race->GetRaceID());
-        /* --------------- GENERATE TRAITS --------------- */ echo "<br>";
+    }
+    /* --------------- IDENTITY VALUES --------------- */
+    public function GetName() {
+        return $this->identity->getName();
     }
 
-    public function VisualizeAll() {
-        $this->ability_scores->Visualize();
+    public function GetLastname() {
+        return $this->identity->getLastname();
     }
 
+    public function GetGender() {
+        return $this->gender->GetGender();
+    }
+
+    /* --------------- RACE VALUES --------------- */
+    public function GetRaceName() {
+        return $this->race->GetRaceName();
+    }
+
+    public function GetMainRaceID() {
+        return $this->race->GetRaceMainRaceID();
+    }
+
+    public function SetSelectedRace($sel) {
+        $this->race->sel_race = $sel;
+    }
+
+    /* --------------- TRAITS VALUES --------------- */
+    public function GetTraits() {
+        return $this->traits->GetTraits();
+    }
+    /* --------------- ABILITY SCORES VALUES --------------- */
     public function GetAbilityScores() {
         return $this->ability_scores->GetScores();
     }
 
-    
+    /* --------------- DEVELOPMENT ONLY --------------- */
+    public function VisualizeAll() {
+        $this->ability_scores->Visualize();
+    }
 }

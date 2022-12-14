@@ -20,7 +20,7 @@ function CreateConnection() {
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     } else {
-        echo "Connection established to database! <br>";
+        echo "<script>console.log('Connection established to database!');</script>";
     }
 
     return $conn;
