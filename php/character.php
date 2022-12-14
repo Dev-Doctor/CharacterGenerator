@@ -14,7 +14,8 @@ class Character {
 
     private $conn;
 
-    function __construct($conn) {
+    function __construct($conn)
+    {
         $this->conn = $conn;
         $this->ability_scores = new Ability_Scores();
         $this->race = new Race($conn);
@@ -23,7 +24,8 @@ class Character {
         $this->traits = new Traits($conn);
     }
 
-    public function Generate() {
+    public function Generate()
+    {
         /* --------------- GENERATE ABILITY SCORES --------------- */
         if (rand(0, 1)) {
             //echo "Determed -> ";
