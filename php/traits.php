@@ -61,6 +61,27 @@ class Traits {
         
         
     }
+
+    function SetHeight(int min, int max){
+        $this->height = rand(min, max);
+    }
+
+    function SetWeight(int min, int max){
+        $this->weight = rand(min, max);
+    }
+
+    function SetHairColor(String color){
+        $this->hair = color;
+    }
+
+    function SetEyesColor(String color){
+        $this->eyes = color;
+    }
+
+    function SetSkinColor(String color){
+        $this->skin = color;
+    }
+
     /**
      * Restituisce tutti i tratti sotto forma di array
      */
