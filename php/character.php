@@ -12,10 +12,10 @@ class Character {
     private $gender;
     private $traits;
 
+    public $sel_abilities;
     private $conn;
 
-    function __construct($conn)
-    {
+    function __construct($conn) {
         $this->conn = $conn;
         $this->ability_scores = new Ability_Scores();
         $this->race = new Race($conn);
@@ -24,20 +24,12 @@ class Character {
         $this->traits = new Traits($conn);
     }
 
-    public function Generate()
-    {
+    public function Generate() {
         /* --------------- GENERATE ABILITY SCORES --------------- */
-        if (rand(0, 1)) {
-            //echo "Determed -> ";
-            $this->ability_scores->GenerateDetermed();
-        } else {
-            //echo "Random -> ";
-            $this->ability_scores->Generate();
-        }
+        $this->ability_scores->Generate();
 
         /* --------------- GENERATE RACE --------------- */
         $this->race->PickRace();
-        //echo $this->race->GetRaceID() . " | " . $this->race->GetRaceName();
 
         /* --------------- GENERATE GENDER --------------- */
         //echo $this->gender->GetGenderNumber();
@@ -48,7 +40,6 @@ class Character {
         } else {
             $this->identity->SetParams($this->race->GetRaceMainRaceID(), $this->gender->GetGenderNumber());
         }
-        $this->identity->SetParams(16, $this->gender->GetGenderNumber()); /* !!! PROBLEM !!! */
         $this->identity->Generate();
         //echo "Name: " . $this->identity->getName() . " | Lastname: " . $this->identity->getLastname();
 
@@ -68,6 +59,14 @@ class Character {
         return $this->gender->GetGender();
     }
 
+    public function SetGender($gn) {
+        if($gn == 'R') {
+            return;
+        }
+
+        $this->gender->SetGender(intval($gn));
+    }
+
     /* --------------- RACE VALUES --------------- */
     public function GetRaceName() {
         return $this->race->GetRaceName();
@@ -85,6 +84,11 @@ class Character {
     public function GetTraits() {
         return $this->traits->GetTraits();
     }
+
+    public function SetSelectedAbilities($sel) {
+        $this->ability_scores->sel_abilities = $sel;
+    }
+
     /* --------------- ABILITY SCORES VALUES --------------- */
     public function GetAbilityScores() {
         return $this->ability_scores->GetScores();

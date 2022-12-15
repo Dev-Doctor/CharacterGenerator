@@ -1,11 +1,31 @@
 <?php
 class Ability_Scores {
     private $scores = [0, 0, 0, 0, 0, 0];
+    public $sel_abilities;
 
-    function __construct() {}
+    function __construct() {
+    }
 
     public function Generate() {
-        for($i = 0; $i < sizeof($this->scores); $i++) {
+        switch ($this->sel_abilities) {
+            case 'S':
+                if (rand(0, 1)) {
+                    $this->GenerateDetermed();
+                } else {
+                    $this->GenerateRandom();
+                }
+                break;
+            case 'D':
+                $this->GenerateDetermed();
+                break;
+            case 'R':
+                $this->GenerateRandom();
+                break;
+        }
+    }
+
+    public function GenerateRandom() {
+        for ($i = 0; $i < sizeof($this->scores); $i++) {
             $this->scores[$i] = $this->Roll_4d6();
         }
     }

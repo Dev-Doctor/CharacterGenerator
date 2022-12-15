@@ -10,6 +10,10 @@ class Gender {
         return $this->gender;
     }
 
+    function SetGender($gn) {
+        $this->gender = $gn;
+    }
+
     function GetGender() {
         if($this->gender) {
             return "male";
