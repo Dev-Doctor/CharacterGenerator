@@ -122,9 +122,13 @@ if (isset($_GET['gen'])) {
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary" name="gen" value="1">Generate</button>
-                <button type="reset" class="btn btn-primary bg-danger border-danger">Reset Filters</button>
-                <a href="generator_test.php"><button class="btn btn-primary bg-warning border-warning   ">Clear</button></a>
+                <div class="row">
+                    <div class="d-grid gap-2 d-md-block">
+                        <button type="submit" class="btn btn-primary btn-block" name="gen" value="1">Generate</button>
+                        <button type="reset" class="btn btn-primary bg-danger border-danger btn-block">Reset Filters</button>
+                        <button class="btn btn-primary bg-warning border-warning btn-block" onclick="generator_test.php">Clear</button>
+                    </div>
+                </div>
             </form>
         </div>
         <br>
@@ -188,34 +192,89 @@ if (isset($_GET['gen'])) {
             </div>
         </div>
         <div class="row pt-3">
-            <div class="col">
-                <div class="h4 pb-2 mb-4 border-bottom">
-                    Class
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="h4 pb-2 mb-4 border-bottom">
+                        Class
+                        <button data-bs-toggle="collapse" data-bs-target="#class_section_v" class="btn"><img src="./img/arrow_down_w.png" width="30" height="30"></button>
+                    </div>
+                    <div class="col collapse" id="class_section_v">
+                        <?php
+                        if ($character != null) {
+                            echo "<p>Class Name: " . $character->GetClassArray()["name"] . "</p>";
+                            echo "<p>Class Description: " . $character->GetClassArray()["desc"] . "</p>";
+                            echo "<p>Primary Ability: " . $character->GetClassArray()["primary"] . "</p>";
+                            echo "<p>Hit Dice: " . $character->GetClassArray()["hit_dice"] . "</p>";
+                            echo "<p>Saving Throws: ";
+                            if (!count($character->GetClassArray()["throws"]["sv_throws"]) == 0) {
+                                for ($i = 0; $i < count($character->GetClassArray()["throws"]["sv_throws"]); $i++) {
+                                    echo $character->GetClassArray()["throws"]["sv_throws"][$i];
+                                    if (array_key_exists($i + 1, $character->GetClassArray()["throws"]["sv_throws"])) {
+                                        echo ", ";
+                                    }
+                                }
+                            } else {
+                                echo "no one";
+                            }
+                            echo "</p>";
+                            echo "<p>Armor Proficency: ";
+                            if (!count($character->GetClassArray()["armor_weapons"]["armor"]) == 0) {
+                                for ($i = 0; $i < count($character->GetClassArray()["armor_weapons"]["armor"]); $i++) {
+                                    echo $character->GetClassArray()["armor_weapons"]["armor"][$i];
+                                    if (array_key_exists($i + 1, $character->GetClassArray()["armor_weapons"]["armor"])) {
+                                        echo " armor, ";
+                                    } else {
+                                        echo " armor";
+                                    }
+                                }
+                            } else {
+                                echo "no one";
+                            }
+                            echo "</p>";
+                            echo "<p>Weapon Proficency: ";
+                            if (!count($character->GetClassArray()["armor_weapons"]["weapons"]) == 0) {
+                                for ($i = 0; $i < count($character->GetClassArray()["armor_weapons"]["weapons"]); $i++) {
+                                    echo $character->GetClassArray()["armor_weapons"]["weapons"][$i];
+                                    if (array_key_exists($i + 1, $character->GetClassArray()["armor_weapons"]["weapons"])) {
+                                        echo ", ";
+                                    }
+                                }
+                            } else {
+                                echo "no one";
+                            }
+                            echo "</p>";
+                        } else {
+                            echo "<p>Not generated yet</p>";
+                        }
+                        ?>
+                    </div>
                 </div>
-                <p>Name: </p>
-                <p>Description: </p>
-                <p>Primary Ability: </p>
-                <p>Hit Dice: </p>
-                <p>Primary Ability: </p>
-                <p>Saving Throws: </p>
-                <p>Weapon Proficency: </p>
-                <p>Armor Proficency:</p>
-            </div>
-            <div class="col">
-                <div class="col">
+                <div class="col-sm-4">
                     <div class="h4 pb-2 mb-4 border-bottom">
                         Background
+                        <button data-bs-toggle="collapse" data-bs-target="#background_section_v" class="btn"><img src="./img/arrow_down_w.png" width="30" height="30"></button>
                     </div>
-                    <p>Personality Traits: </p>
-                    <p>Ideals: </p>
-                    <p>Bons: </p>
-                    <p>Flaws: </p>
+                    <div class="col collapse" id="background_section_v">
+                        <div class="col">
+                            <p>Personality Traits: </p>
+                            <p>Ideals: </p>
+                            <p>Bons: </p>
+                            <p>Flaws: </p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="col">
+                <div class="col-sm-4">
                     <div class="h4 pb-2 mb-4 border-bottom">
                         Racial Traits
+                        <button data-bs-toggle="collapse" data-bs-target="#racial_traits_section_v" class="btn"><img src="./img/arrow_down_w.png" width="30" height="30"></button>
+                    </div>
+                    <div class="col collapse" id="racial_traits_section_v">
+                        <div class="col">
+                            <p>Lorem Ipsum: </p>
+                            <p>Lorem Ipsum: </p>
+                            <p>Lorem Ipsum: </p>
+                            <p>Lorem Ipsum: </p>
+                        </div>
                     </div>
                 </div>
             </div>

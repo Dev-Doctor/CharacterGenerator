@@ -1,6 +1,5 @@
 <?php
-class GenerateClass
-{
+class GenerateClass {
 
     private $class = "";
     private $name = "";
@@ -15,8 +14,7 @@ class GenerateClass
      *  Costruttore
      * @param {} conn
      */
-    function __construct($conn)
-    {
+    function __construct($conn) {
         $this->conn = $conn;
     }
 
@@ -25,8 +23,7 @@ class GenerateClass
      * @param {} conn
      * @return {} ritorna la query generata contenente la classe del personaggio
      */
-    public function Generate()
-    {
+    public function Generate() {
         // Faccio una query di tutti i nomi di una determinata razza e genere, li randomizzo e ne prendo 1
         $queryClass = "SELECT * FROM classes ORDER BY RAND() LIMIT 1";
         $result = $this->conn->query($queryClass);
@@ -54,8 +51,7 @@ class GenerateClass
      * @param {} conn
      * @return {} ritorna la query generata contenente la classe del personaggio
      */
-    private function generateClassDetermed($conn)
-    {
+    private function generateClassDetermed($conn) {
         /*FUNZIONE DETERMED NON ANCORA IMPLEMENTATA*/
         // Faccio una query di tutti i nomi di una determinata razza e genere, li randomizzo e ne prendo 1
         $queryClass = "";
@@ -83,8 +79,7 @@ class GenerateClass
      * Ritorna il nome dalla query generata
      * @return {String} ritorna il nome del personaggio
      */
-    public function getName()
-    {
+    public function getName() {
         if ($this->name == "") {
             return "Non ancora generato.";
         }
@@ -95,8 +90,7 @@ class GenerateClass
      * Ritorna il description dalla query generata
      * @return {String} ritorna il nome del personaggio
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         if ($this->description == "") {
             return "Non ancora generato.";
         }
@@ -107,8 +101,7 @@ class GenerateClass
      * Ritorna il hit_dice dalla query generata
      * @return {String} ritorna il nome del personaggio
      */
-    public function getHit_dice()
-    {
+    public function getHit_dice() {
         if ($this->hit_dice == "") {
             return "Non ancora generato.";
         }
@@ -119,8 +112,7 @@ class GenerateClass
      * Ritorna il primary_ability dalla query generata
      * @return {String} ritorna il nome del personaggio
      */
-    public function getPrimary_ability()
-    {
+    public function getPrimary_ability() {
         if ($this->primary_ability == "") {
             return "Non ancora generato.";
         }
@@ -131,8 +123,7 @@ class GenerateClass
      * Ritorna il saving_throws dalla query generata
      * @return {String} ritorna il nome del personaggio
      */
-    public function getSaving_throws()
-    {
+    public function getSaving_throws() {
         if ($this->saving_throws == "") {
             return "Non ancora generato.";
         }
@@ -143,8 +134,7 @@ class GenerateClass
      * Ritorna il armor_weapons dalla query generata
      * @return {String} ritorna il nome del personaggio
      */
-    public function getArmor_weapons()
-    {
+    public function getArmor_weapons() {
         if ($this->armor_weapons == "") {
             return "Non ancora generato.";
         }
@@ -155,8 +145,7 @@ class GenerateClass
      * Converte una struttura json e ritorta un array
      * @return {String} ritorna un array
      */
-    function convertJson($json)
-    {
+    function convertJson($json) {
         $result = json_decode($json, true);
         if ($result == NULL) {
             return "Errore valore NULL.";
@@ -168,8 +157,7 @@ class GenerateClass
      *  Funzione per debug, scrive su console
      * @param {} output è il messaggio da scrivere
      */
-    public function console_log($output, $with_script_tags = true)
-    {
+    public function console_log($output, $with_script_tags = true) {
         $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) . ');';
         if ($with_script_tags) {
             $js_code = '<script>' . $js_code . '</script>';

@@ -4,6 +4,7 @@ include 'identity.php';
 include 'race_select.php';
 include 'gender.php';
 include 'traits.php';
+include 'classGen.php';
 
 class Character {
     private $ability_scores;
@@ -11,6 +12,7 @@ class Character {
     private $race;
     private $gender;
     private $traits;
+    private $class;
 
     public $sel_abilities;
     private $conn;
@@ -22,6 +24,7 @@ class Character {
         $this->identity = new GenerateNames($conn);
         $this->gender = new Gender();
         $this->traits = new Traits($conn);
+        $this->class = new GenerateClass($conn);
     }
 
     public function Generate() {
@@ -45,6 +48,9 @@ class Character {
 
         /* --------------- GENERATE TRAITS --------------- */
         $this->traits->Generate($this->race->GetRaceID());
+
+        /* --------------- GENERATE CLASS --------------- */
+        $this->class->Generate();
     }
     /* --------------- IDENTITY VALUES --------------- */
     public function GetName() {
@@ -92,6 +98,18 @@ class Character {
     /* --------------- ABILITY SCORES VALUES --------------- */
     public function GetAbilityScores() {
         return $this->ability_scores->GetScores();
+    }
+
+    /* --------------- GENERATE CLASS --------------- */
+    public function GetClassArray() {
+        return [
+            "name" => $this->class->getName(),
+            "desc" => $this->class->getDescription(),
+            "hit_dice" => $this->class->getHit_dice(),
+            "primary" => $this->class->getPrimary_ability(),
+            "throws" => $this->class->getSaving_throws(),
+            "armor_weapons" => $this->class->getArmor_weapons()
+        ];
     }
 
     /* --------------- DEVELOPMENT ONLY --------------- */
