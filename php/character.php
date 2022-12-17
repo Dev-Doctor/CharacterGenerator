@@ -5,6 +5,8 @@ include 'race_select.php';
 include 'gender.php';
 include 'traits.php';
 include 'classGen.php';
+include 'background.php';
+include 'personality.php';
 
 class Character {
     private $ability_scores;
@@ -13,6 +15,8 @@ class Character {
     private $gender;
     private $traits;
     private $class;
+    private $background;
+    private $personality;
 
     public $sel_abilities;
     private $conn;
@@ -25,34 +29,38 @@ class Character {
         $this->gender = new Gender();
         $this->traits = new Traits($conn);
         $this->class = new GenerateClass($conn);
+        $this->background = new Background($conn);
+        $this->personality = new Personality($conn);
     }
 
     public function Generate() {
-        /* --------------- GENERATE ABILITY SCORES --------------- */
+        // GENERATE ABILITY SCORES
         $this->ability_scores->Generate();
 
-        /* --------------- GENERATE RACE --------------- */
+       // GENERATE RACE
         $this->race->PickRace();
 
-        /* --------------- GENERATE GENDER --------------- */
-        //echo $this->gender->GetGenderNumber();
-
-        /* --------------- GENERATE NAME AND LASTNAME --------------- */
+        // GENERATE NAME AND LASTNAME
         if ($this->race->GetRaceMainRaceID() == null) {
             $this->identity->SetParams($this->race->GetRaceID(), $this->gender->GetGenderNumber());
         } else {
             $this->identity->SetParams($this->race->GetRaceMainRaceID(), $this->gender->GetGenderNumber());
         }
         $this->identity->Generate();
-        //echo "Name: " . $this->identity->getName() . " | Lastname: " . $this->identity->getLastname();
 
-        /* --------------- GENERATE TRAITS --------------- */
+        // GENERATE TRAITS
         $this->traits->Generate($this->race->GetRaceID());
 
-        /* --------------- GENERATE CLASS --------------- */
+        // GENERATE CLASS
         $this->class->Generate();
+
+        // GENERATE PERSONALITY
+        $this->personality->Generate();
+
+        // GENERATE BACKGROUND 
+        $this->background->Generate($this->personality->GetPersonalityData()["id"]);
     }
-    /* --------------- IDENTITY VALUES --------------- */
+    // IDENTITY VALUES
     public function GetName() {
         return $this->identity->getName();
     }
@@ -73,7 +81,7 @@ class Character {
         $this->gender->SetGender(intval($gn));
     }
 
-    /* --------------- RACE VALUES --------------- */
+    // RACE VALUES
     public function GetRaceName() {
         return $this->race->GetRaceName();
     }
@@ -86,7 +94,7 @@ class Character {
         $this->race->sel_race = $sel;
     }
 
-    /* --------------- TRAITS VALUES --------------- */
+    // TRAITS VALUES
     public function GetTraits() {
         return $this->traits->GetTraits();
     }
@@ -95,12 +103,12 @@ class Character {
         $this->ability_scores->sel_abilities = $sel;
     }
 
-    /* --------------- ABILITY SCORES VALUES --------------- */
+    // ABILITY SCORES VALUES
     public function GetAbilityScores() {
         return $this->ability_scores->GetScores();
     }
 
-    /* --------------- GENERATE CLASS --------------- */
+    // CLASS VALUES
     public function GetClassArray() {
         return [
             "name" => $this->class->getName(),
@@ -112,8 +120,28 @@ class Character {
         ];
     }
 
-    /* --------------- DEVELOPMENT ONLY --------------- */
+    public function SetSelectedClass($cl) {
+        $this->class->sel_class = $cl;
+    }
+
+    // PERSONALITY VALUES
+    public function GetPersonalityValues() {
+        return $this->personality->GetPersonalityData();
+    }
+
+    public function SetSelectedPersonality($pers) {
+        $this->personality->sel_personality = $pers;
+    }
+
+    // GET BACKGROUND VALUES
+    public function GetBackgrounds() {
+        return $this->background->GetBackground();
+    }
+
+    // DEVELOPMENT ONLY
+    /*
     public function VisualizeAll() {
         $this->ability_scores->Visualize();
     }
+    */
 }

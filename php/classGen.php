@@ -10,6 +10,7 @@ class GenerateClass {
     private $armor_weapons;
     private $conn;
 
+    public $sel_class;
     /**
      *  Costruttore
      * @param {} conn

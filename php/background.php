@@ -1,5 +1,5 @@
 <?php
-class Background{
+class Background {
     private $feature;
     private $personalityTrait;
     private $ideal;
@@ -10,24 +10,24 @@ class Background{
         $this->conn = $conn;
     }
 
-    function Generate($personality){
-        $myQuery = "SELECT backgrounds.description FROM backgrounds WHERE personality=".$personality." AND type=1";
+    function Generate($personality) {
+        $myQuery = "SELECT backgrounds.description FROM backgrounds WHERE personality=" . $personality . " AND type=1";
         $that = $this->conn->query($myQuery);
         $this->feature = $that->fetch_assoc()["description"];
 
-        $myQuery = "SELECT backgrounds.description FROM backgrounds WHERE personality=".$personality." AND type=2 ORDER BY RAND() LIMIT 1";
+        $myQuery = "SELECT backgrounds.description FROM backgrounds WHERE personality=" . $personality . " AND type=2 ORDER BY RAND() LIMIT 1";
         $that = $this->conn->query($myQuery);
         $this->personalityTrait = $that->fetch_assoc()["description"];
 
-        $myQuery = "SELECT backgrounds.description FROM backgrounds WHERE personality=".$personality." AND type=3 ORDER BY RAND() LIMIT 1";
+        $myQuery = "SELECT backgrounds.description FROM backgrounds WHERE personality=" . $personality . " AND type=3 ORDER BY RAND() LIMIT 1";
         $that = $this->conn->query($myQuery);
         $this->ideal = $that->fetch_assoc()["description"];
 
-        $myQuery = "SELECT backgrounds.description FROM backgrounds WHERE personality=".$personality." AND type=4 ORDER BY RAND() LIMIT 1";
+        $myQuery = "SELECT backgrounds.description FROM backgrounds WHERE personality=" . $personality . " AND type=4 ORDER BY RAND() LIMIT 1";
         $that = $this->conn->query($myQuery);
         $this->bond = $that->fetch_assoc()["description"];
 
-        $myQuery = "SELECT backgrounds.description FROM backgrounds WHERE personality=".$personality." AND type=5 ORDER BY RAND() LIMIT 1";
+        $myQuery = "SELECT backgrounds.description FROM backgrounds WHERE personality=" . $personality . " AND type=5 ORDER BY RAND() LIMIT 1";
         $that = $this->conn->query($myQuery);
         $this->flaw = $that->fetch_assoc()["description"];
 
@@ -35,7 +35,7 @@ class Background{
         //"<br><br>ideal->".$this->ideal."<br><br>bond->".$this->bond."<br><br>flaw->".$this->flaw;
     }
 
-    function GetBackground(){
+    function GetBackground() {
         return [
             "feature" => $this->feature,
             "personalityTrait" => $this->personalityTrait,
@@ -44,6 +44,4 @@ class Background{
             "flaw" => $this->flaw
         ];
     }
-
 }
-?>

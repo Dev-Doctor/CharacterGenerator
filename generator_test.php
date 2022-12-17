@@ -38,6 +38,8 @@ if (isset($_GET['gen'])) {
     $character->SetGender($_GET['gender']);
     $character->SetSelectedRace($_GET['race']);
     $character->SetSelectedAbilities($_GET['ab_scores']);
+    $character->SetSelectedClass($_GET['class']);
+    $character->SetSelectedPersonality($_GET['personality']);
     $character->Generate();
 }
 ?>
@@ -65,13 +67,41 @@ if (isset($_GET['gen'])) {
         <br>
         <div class="row">
             <br>
-            <form action="" method="GET" class="border-bottom pb-3">
+            <!-- <iframe name="votar" style="display:none;"></iframe> -->
+            <form action="" method="GET" class="border-bottom pb-3" target="">
                 <div class="row">
                     <div class="col">
-                        <select class="form-select" aria-label="Race Selector" name="race">
+                        <p class="mb-1">Select Race:</p>
+                        <select class="form-select mb-1" aria-label="Race Selector" name="race">
                             <option value="-1" selected>Random Race</option>
                             <?php
                             $myQuery = "SELECT ID,name FROM races";
+                            $races = $conn->query($myQuery);
+                            if ($races->num_rows > 0) {
+                                while ($single_rc = $races->fetch_assoc()) {
+                                    echo '<option value="' . $single_rc["ID"] . '">' . $single_rc["name"] . '</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+                        <p class="mb-1">Select Class:</p>
+                        <select class="form-select mb-1" aria-label="Race Selector" name="class">
+                            <option value="-1" selected>Random Class</option>
+                            <?php
+                            $myQuery = "SELECT ID,name FROM classes";
+                            $races = $conn->query($myQuery);
+                            if ($races->num_rows > 0) {
+                                while ($single_rc = $races->fetch_assoc()) {
+                                    echo '<option value="' . $single_rc["ID"] . '">' . $single_rc["name"] . '</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+                        <p class="mb-1">Select Personality:</p>
+                        <select class="form-select mb-1" aria-label="Race Selector" name="personality">
+                            <option value="-1" selected>Random Personality</option>
+                            <?php
+                            $myQuery = "SELECT ID,name FROM personality";
                             $races = $conn->query($myQuery);
                             if ($races->num_rows > 0) {
                                 while ($single_rc = $races->fetch_assoc()) {
@@ -251,20 +281,6 @@ if (isset($_GET['gen'])) {
                 </div>
                 <div class="col-sm-4">
                     <div class="h4 pb-2 mb-4 border-bottom">
-                        Background
-                        <button data-bs-toggle="collapse" data-bs-target="#background_section_v" class="btn"><img src="./img/arrow_down_w.png" width="30" height="30"></button>
-                    </div>
-                    <div class="col collapse" id="background_section_v">
-                        <div class="col">
-                            <p>Personality Traits: </p>
-                            <p>Ideals: </p>
-                            <p>Bons: </p>
-                            <p>Flaws: </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="h4 pb-2 mb-4 border-bottom">
                         Racial Traits
                         <button data-bs-toggle="collapse" data-bs-target="#racial_traits_section_v" class="btn"><img src="./img/arrow_down_w.png" width="30" height="30"></button>
                     </div>
@@ -277,17 +293,57 @@ if (isset($_GET['gen'])) {
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-4">
+                    <div class="h4 pb-2 mb-4 border-bottom">
+                        Background
+                        <button data-bs-toggle="collapse" data-bs-target="#background_section_v" class="btn"><img src="./img/arrow_down_w.png" width="30" height="30"></button>
+                    </div>
+                    <div class="col collapse" id="background_section_v">
+                        <div class="col">
+                            <?php
+                            if ($character != null) {
+                                echo "<p>Personality: " . $character->GetPersonalityValues()["name"] . "</p>";
+                                echo "<p>Personality Traits: " . $character->GetBackgrounds()["personalityTrait"] . "</p>";
+                                echo "<p>Ideals: " . $character->GetBackgrounds()["ideal"] . "</p>";
+                                echo "<p>Bons: " . $character->GetBackgrounds()["bond"] . "</p>";
+                                echo "<p>Flaws: " . $character->GetBackgrounds()["flaw"] . "</p>";
+                            } else {
+                                echo "<p>Not generated yet</p>";
+                            }
+                            ?>
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
-            <div class="col">
-                <div class="h4 pb-2 mb-4 border-bottom">
-                    Backstory
-                </div>
-            </div>
-            <div class="col">
+            <div class="col-sm-4">
                 <div class="h4 pb-2 mb-4 border-bottom">
                     ???
+                    <button data-bs-toggle="collapse" data-bs-target="#personality_section_v" class="btn"><img src="./img/arrow_down_w.png" width="30" height="30"></button>
+                </div>
+                <div class="col collapse" id="personality_section_v">
+                    <div class="col">
+                        <p>Lorem Ipsum: </p>
+                        <p>Lorem Ipsum: </p>
+                        <p>Lorem Ipsum: </p>
+                        <p>Lorem Ipsum: </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="h4 pb-2 mb-4 border-bottom">
+                    ???
+                    <button data-bs-toggle="collapse" data-bs-target="#temp_section_v" class="btn"><img src="./img/arrow_down_w.png" width="30" height="30"></button>
+                </div>
+                <div class="col collapse" id="temp_section_v">
+                    <div class="col">
+                        <p>Lorem Ipsum: </p>
+                        <p>Lorem Ipsum: </p>
+                        <p>Lorem Ipsum: </p>
+                        <p>Lorem Ipsum: </p>
+                    </div>
                 </div>
             </div>
         </div>
