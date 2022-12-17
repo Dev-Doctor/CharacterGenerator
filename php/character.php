@@ -37,7 +37,7 @@ class Character {
         // GENERATE ABILITY SCORES
         $this->ability_scores->Generate();
 
-       // GENERATE RACE
+        // GENERATE RACE
         $this->race->PickRace();
 
         // GENERATE NAME AND LASTNAME
@@ -74,7 +74,7 @@ class Character {
     }
 
     public function SetGender($gn) {
-        if($gn == 'R') {
+        if ($gn == 'R') {
             return;
         }
 
@@ -121,7 +121,7 @@ class Character {
     }
 
     public function SetSelectedClass($cl) {
-        $this->class->sel_class = $cl;
+        $this->class->setSel_class($cl);
     }
 
     // PERSONALITY VALUES

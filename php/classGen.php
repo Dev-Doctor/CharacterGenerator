@@ -1,6 +1,7 @@
 <?php
 class GenerateClass {
 
+    private $sel_class = "";
     private $class = "";
     private $name = "";
     private $description = "";
@@ -10,7 +11,6 @@ class GenerateClass {
     private $armor_weapons;
     private $conn;
 
-    public $sel_class;
     /**
      *  Costruttore
      * @param {} conn
@@ -22,9 +22,22 @@ class GenerateClass {
     /**
      *  Genera la classe del personaggio
      * @param {} conn
-     * @return {} ritorna la query generata contenente la classe del personaggio
+     * @return {} ritorna la classe del personaggio
      */
     public function Generate() {
+        // Se sel_class è -1 la classe sarà generata randomicamente
+        if ($this->sel_class = -1) {
+            return $this->generateClassRandom();
+        }
+        // Altrimenti sel_class conterrà l'ID della classe da ritornare 
+        return $this->generateClassDetermed($this->sel_class);
+    }
+
+    /**
+     *  Genera la classe random del personaggio
+     * @return {} ritorna la query generata contenente la classe del personaggio
+     */
+    private function generateClassRandom() {
         // Faccio una query di tutti i nomi di una determinata razza e genere, li randomizzo e ne prendo 1
         $queryClass = "SELECT * FROM classes ORDER BY RAND() LIMIT 1";
         $result = $this->conn->query($queryClass);
@@ -46,17 +59,15 @@ class GenerateClass {
         return $result;
     }
 
-    /*FUNZIONE DETERMED NON ANCORA IMPLEMENTATA*/
     /**
-     *  Sceglie una classe per il personaggio in base a varie abilità
-     * @param {} conn
+     *  Sceglie una classe per il personaggio
+     * @param {} sel_class L'ID della classe
      * @return {} ritorna la query generata contenente la classe del personaggio
      */
-    private function generateClassDetermed($conn) {
-        /*FUNZIONE DETERMED NON ANCORA IMPLEMENTATA*/
+    private function generateClassDetermed($sel_class) {
         // Faccio una query di tutti i nomi di una determinata razza e genere, li randomizzo e ne prendo 1
-        $queryClass = "";
-        $result = $conn->query($queryClass);
+        $queryClass = "SELECT * FROM classes WHERE ID = '$sel_class'";
+        $result = $this->conn->query($queryClass);
         // Contollo che abbia trovato qualcosa
         if ($result->num_rows <= 0) {
             return -30;
@@ -73,7 +84,14 @@ class GenerateClass {
 
         // Return risultato query
         return $result;
-        /*FUNZIONE DETERMED NON ANCORA IMPLEMENTATA*/
+    }
+
+    /**
+     * Setta la variabile sel_class
+     * @param {Int} Variabile che contiene l'ID della classe o -1, nell'ultimo caso l'ID della classe sarà random
+     */
+    public function setSel_class($sel_class) {
+        $this->sel_class = $sel_class;
     }
 
     /**
