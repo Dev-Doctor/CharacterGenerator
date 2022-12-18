@@ -1,7 +1,5 @@
 <?php
 class GenerateClass {
-
-    private $sel_class = "";
     private $class = "";
     private $name = "";
     private $description = "";
@@ -9,7 +7,9 @@ class GenerateClass {
     private $primary_ability = "";
     private $saving_throws;
     private $armor_weapons;
+    
     private $conn;
+    private $sel_class;
 
     /**
      *  Costruttore
@@ -26,7 +26,7 @@ class GenerateClass {
      */
     public function Generate() {
         // Se sel_class è -1 la classe sarà generata randomicamente
-        if ($this->sel_class = -1) {
+        if ($this->sel_class == -1) {
             return $this->generateClassRandom();
         }
         // Altrimenti sel_class conterrà l'ID della classe da ritornare 

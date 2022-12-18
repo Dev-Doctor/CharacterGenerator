@@ -46,6 +46,10 @@ class Character {
         } else {
             $this->identity->SetParams($this->race->GetRaceMainRaceID(), $this->gender->GetGenderNumber());
         }
+        if($this->race->GetRaceNeutralNames()) {
+            $this->identity->gender = 1;
+        }
+
         $this->identity->Generate();
 
         // GENERATE TRAITS

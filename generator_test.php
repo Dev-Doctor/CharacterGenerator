@@ -164,13 +164,25 @@ if (isset($_GET['gen'])) {
         <br>
         <div class="row">
             <div class="col-sm-4">
+                <?php
+                echo '<img src="';
+                if(isset($_GET['gen'])) {
+                    echo 'img/races/' . strtolower($character->GetRaceName()) . '.jpg';
+                }
+                echo '" class="rounded" alt="" width="100%">'
+                ?>
+            </div>
+
+            <div class="col-sm-4">
                 <div class="h4 pb-2 mb-4 border-bottom">
                     Identity
                 </div>
                 <?php
                 if ($character != null) {
                     echo "<p>Name: " . $character->GetName() . "</p>";
-                    echo "<p>Lastname: " . $character->GetLastname() . "</p>";
+                    if (!$character->GetLastname() == -30) {
+                        echo "<p>Lastname: " . $character->GetLastname() . "</p>";
+                    }
                     echo "<p>Race: " . $character->GetRaceName() . "</p>";
                     if ($character->GetMainRaceID() != null) {
                         echo "<p>Is a subrace</p>";
@@ -179,7 +191,6 @@ if (isset($_GET['gen'])) {
                 } else {
                     echo "<p>Not generated yet</p>";
                 }
-
                 ?>
 
             </div>
@@ -202,27 +213,29 @@ if (isset($_GET['gen'])) {
                 }
                 ?>
             </div>
-
-            <div class="col-sm-4">
-                <div class="h4 pb-2 mb-4 border-bottom">
-                    Ability Scores
-                </div>
-                <?php
-                if ($character != null) {
-                    echo "<p>Strenght: " . $character->GetAbilityScores()[0] . "</p>";
-                    echo "<p>Dexterity: " . $character->GetAbilityScores()[1] . "</p>";
-                    echo "<p>Constitution: " . $character->GetAbilityScores()[2] . "</p>";
-                    echo "<p>Intelligence: " . $character->GetAbilityScores()[3] . "</p>";
-                    echo "<p>Wisdom: " . $character->GetAbilityScores()[4] . "</p>";
-                    echo "<p>Charisma: " . $character->GetAbilityScores()[5] . "</p>";
-                } else {
-                    echo "<p>Not generated yet</p>";
-                }
-                ?>
-            </div>
         </div>
         <div class="row pt-3">
             <div class="row">
+                <div class="col-sm-4">
+                    <div class="h4 pb-2 mb-4 border-bottom">
+                        Ability Scores
+                        <button data-bs-toggle="collapse" data-bs-target="#scores_section_v" class="btn"><img src="./img/arrow_down_w.png" width="30" height="30"></button>
+                    </div>
+                    <div class="col collapse" id="scores_section_v">
+                        <?php
+                        if ($character != null) {
+                            echo "<p>Strenght: " . $character->GetAbilityScores()[0] . "</p>";
+                            echo "<p>Dexterity: " . $character->GetAbilityScores()[1] . "</p>";
+                            echo "<p>Constitution: " . $character->GetAbilityScores()[2] . "</p>";
+                            echo "<p>Intelligence: " . $character->GetAbilityScores()[3] . "</p>";
+                            echo "<p>Wisdom: " . $character->GetAbilityScores()[4] . "</p>";
+                            echo "<p>Charisma: " . $character->GetAbilityScores()[5] . "</p>";
+                        } else {
+                            echo "<p>Not generated yet</p>";
+                        }
+                        ?>
+                    </div>
+                </div>
                 <div class="col-sm-4">
                     <div class="h4 pb-2 mb-4 border-bottom">
                         Class
@@ -286,10 +299,8 @@ if (isset($_GET['gen'])) {
                     </div>
                     <div class="col collapse" id="racial_traits_section_v">
                         <div class="col">
-                            <p>Lorem Ipsum: </p>
-                            <p>Lorem Ipsum: </p>
-                            <p>Lorem Ipsum: </p>
-                            <p>Lorem Ipsum: </p>
+                            <p>empty</p>
+                            <!-- COMING IN V2 -->
                         </div>
                     </div>
                 </div>
@@ -304,6 +315,7 @@ if (isset($_GET['gen'])) {
                             if ($character != null) {
                                 echo "<p>Personality: " . $character->GetPersonalityValues()["name"] . "</p>";
                                 echo "<p>Personality Traits: " . $character->GetBackgrounds()["personalityTrait"] . "</p>";
+                                echo "<p>Privilege: " . $character->GetBackgrounds()["feature"] . "</p>";
                                 echo "<p>Ideals: " . $character->GetBackgrounds()["ideal"] . "</p>";
                                 echo "<p>Bons: " . $character->GetBackgrounds()["bond"] . "</p>";
                                 echo "<p>Flaws: " . $character->GetBackgrounds()["flaw"] . "</p>";
@@ -315,34 +327,26 @@ if (isset($_GET['gen'])) {
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="h4 pb-2 mb-4 border-bottom">
-                    ???
-                    <button data-bs-toggle="collapse" data-bs-target="#personality_section_v" class="btn"><img src="./img/arrow_down_w.png" width="30" height="30"></button>
-                </div>
-                <div class="col collapse" id="personality_section_v">
-                    <div class="col">
-                        <p>Lorem Ipsum: </p>
-                        <p>Lorem Ipsum: </p>
-                        <p>Lorem Ipsum: </p>
-                        <p>Lorem Ipsum: </p>
+                <div class="col-sm-4">
+                    <div class="h4 pb-2 mb-4 border-bottom text-muted">
+                        Coming in V2
+                        <button data-bs-toggle="collapse" data-bs-target="#personality_section_v" class="btn"><img src="./img/arrow_down_w.png" width="30" height="30"></button>
+                    </div>
+                    <div class="col collapse" id="personality_section_v">
+                        <div class="col">
+                            <!-- COMING IN V2 -->
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="h4 pb-2 mb-4 border-bottom">
-                    ???
-                    <button data-bs-toggle="collapse" data-bs-target="#temp_section_v" class="btn"><img src="./img/arrow_down_w.png" width="30" height="30"></button>
-                </div>
-                <div class="col collapse" id="temp_section_v">
-                    <div class="col">
-                        <p>Lorem Ipsum: </p>
-                        <p>Lorem Ipsum: </p>
-                        <p>Lorem Ipsum: </p>
-                        <p>Lorem Ipsum: </p>
+                <div class="col-sm-4">
+                    <div class="h4 pb-2 mb-4 border-bottom text-muted">
+                        Coming in V2
+                        <button data-bs-toggle="collapse" data-bs-target="#temp_section_v" class="btn"><img src="./img/arrow_down_w.png" width="30" height="30"></button>
+                    </div>
+                    <div class="col collapse" id="temp_section_v">
+                        <div class="col">
+                            <!-- COMING IN V2 -->
+                        </div>
                     </div>
                 </div>
             </div>

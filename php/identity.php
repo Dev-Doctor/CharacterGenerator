@@ -5,7 +5,7 @@ class GenerateNames {
   private $lastname = "";
   private $conn;
   private $race;
-  private $gender;
+  public $gender;
 
   /**
    *  Costruttore
@@ -41,9 +41,9 @@ class GenerateNames {
    * @param {Int} gender genere del personaggio
    * @return {String} ritorna il nome del personaggio
    */
-  private function generateName($conn, $race, $gender)
-  {
+  private function generateName($conn, $race, $gender) {
     // Faccio una query di tutti i nomi di una determinata razza e genere, li randomizzo e ne prendo 1
+    if($race)
     $queryName = "SELECT * FROM names WHERE race = '$race' AND gender = '$gender' ORDER BY RAND() LIMIT 1";
     $resultName = $conn->query($queryName);
     // Contollo che il numero di nomi trovati sia maggiore di 0

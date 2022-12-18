@@ -34,6 +34,11 @@ class Traits {
      * @param  {Number} raceID ID della razza all'interno del database
      */
     function Generate($raceID) {
+        $result = $this->conn->query("SELECT * FROM races WHERE ID=" . $raceID)->fetch_assoc();
+        if($result["traits"] == null) {
+            $raceID = $result["main_race"];
+        }
+
         $myQuery = "SELECT races.ID, traits.BaseHeight, traits.HeightModifier, traits.BaseWeight, traits.WeightModifier, traits.MinAge, traits.MaxAge, traits.eyes_colors, traits.skin_colors, traits.hair_colors FROM races INNER JOIN traits ON races.traits=traits.ID WHERE races.ID = " . $raceID;
         $that = $this->conn->query($myQuery);
         $race = $that->fetch_assoc();
@@ -56,10 +61,6 @@ class Traits {
         $dice = new dice();
         $this->height = $race["BaseHeight"] + $dice->roll($race["HeightModifier"]);
         $this->weight = $race["BaseWeight"] * $dice->roll($race["WeightModifier"]);
-
-        //echo ("Traits-> [height:" . $this->height . "] [weight:" . $this->weight . "] [age: " . $this->age . "] [eyes:" . $this->eyes . "] [skin:" . $this->skin . "] [hair:" . $this->hair . "]<br>");
-        
-        
     }
 
     function SetHeight($min, $max){
@@ -87,8 +88,10 @@ class Traits {
      */
     public function GetTraits() {
         return [
-            "height" => $this->height,
-            "weight" => $this->weight,
+            //CONVERSION FROM INCHES TO CENTIMETERS
+            "height" => $this->height * 2.54,
+            //CONVERSION FROM POUNDS TO KILOGRAMS
+            "weight" => $this->weight * 0.45359237,
             "age" => $this->age,
             "eyes" => $this->eyes,
             "skin" => $this->skin,

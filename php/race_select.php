@@ -39,6 +39,10 @@ class Race {
         return $this->race["name"];
     }
 
+    public function GetRaceNeutralNames() {
+        return $this->race["neutral_names"];
+    }
+
     /**
      * @deprecated
      */
