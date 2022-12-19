@@ -98,6 +98,10 @@ class Character {
         $this->race->sel_race = $sel;
     }
 
+    public function GetRacialTraits() {
+        return $this->race->GetRacialTraits();
+    }
+
     // TRAITS VALUES
     public function GetTraits() {
         return $this->traits->GetTraits();

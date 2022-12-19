@@ -1,7 +1,13 @@
 <?php
 class Race {
     private $conn;
+
     private $race;
+    private $racial_traits = [
+        array(),
+        array()
+    ];
+
     public $sel_race = NULL;
 
     function __construct($conn) {
@@ -21,6 +27,21 @@ class Race {
             $query = "SELECT * FROM `races` WHERE main_race = " . $id . " ORDER BY RAND() LIMIT 1";
             $this->race = $this->conn->query($query)->fetch_assoc();
         }
+
+        $query = "SELECT * FROM `racial_traits` WHERE race=" . $this->race["ID"];
+        $result = $this->conn->query($query);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                array_push($this->racial_traits[0], $row["trait_name"]);
+                array_push($this->racial_traits[1], $row["trait_description"]);
+            }
+        } else {
+            echo "0 results";
+        }
+    }
+
+    public function GetRacialTraits() {
+        return $this->racial_traits;
     }
 
     public function GetRaceID() {

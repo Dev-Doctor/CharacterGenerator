@@ -166,7 +166,7 @@ if (isset($_GET['gen'])) {
             <div class="col-sm-4">
                 <?php
                 echo '<img src="';
-                if(isset($_GET['gen'])) {
+                if (isset($_GET['gen'])) {
                     echo 'img/races/' . strtolower($character->GetRaceName()) . '.jpg';
                 }
                 echo '" class="rounded" alt="" width="100%">'
@@ -299,8 +299,18 @@ if (isset($_GET['gen'])) {
                     </div>
                     <div class="col collapse" id="racial_traits_section_v">
                         <div class="col">
-                            <p>empty</p>
-                            <!-- COMING IN V2 -->
+                            <?php
+                            if ($character != null) {
+                                echo '<table class="table border border-0">';
+                                $items = $character->GetRacialTraits();
+                                for ($i = 0; $i < count($items[0]); $i++) {
+                                    echo '<tr><th class="border-top border-bottom">' . $items[0][$i] . '</th><td class="border-top border-bottom">' . $items[1][$i] . '</td></tr>';
+                                }
+                                echo '</table>';
+                            } else {
+                                echo "<p>Not generated yet</p>";
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -329,7 +339,7 @@ if (isset($_GET['gen'])) {
                 </div>
                 <div class="col-sm-4">
                     <div class="h4 pb-2 mb-4 border-bottom text-muted">
-                        Coming in V2
+                        Coming in future
                         <button data-bs-toggle="collapse" data-bs-target="#personality_section_v" class="btn"><img src="./img/arrow_down_w.png" width="30" height="30"></button>
                     </div>
                     <div class="col collapse" id="personality_section_v">
@@ -340,7 +350,7 @@ if (isset($_GET['gen'])) {
                 </div>
                 <div class="col-sm-4">
                     <div class="h4 pb-2 mb-4 border-bottom text-muted">
-                        Coming in V2
+                        Coming in future
                         <button data-bs-toggle="collapse" data-bs-target="#temp_section_v" class="btn"><img src="./img/arrow_down_w.png" width="30" height="30"></button>
                     </div>
                     <div class="col collapse" id="temp_section_v">
