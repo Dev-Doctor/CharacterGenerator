@@ -7,9 +7,11 @@ class GenerateClass {
     private $primary_ability = "";
     private $saving_throws;
     private $armor_weapons;
-    
+
     private $conn;
     private $sel_class;
+
+    private $scores;
 
     /**
      *  Costruttore
@@ -25,12 +27,17 @@ class GenerateClass {
      * @return {} ritorna la classe del personaggio
      */
     public function Generate() {
-        // Se sel_class è -1 la classe sarà generata randomicamente
-        if ($this->sel_class == -1) {
-            return $this->generateClassRandom();
+        if ($this->sel_class == -1 || $this->sel_class == NULL) {
+            /*if (rand(0, 1)) {
+                // Se sel_class è -1 la classe sarà generata randomicamente
+                return $this->generateClassRandom();
+            } else {*/
+                // Altrimenti sel_class conterrà l'ID della classe da ritornare 
+                return $this->generateClassDetermed($this->scores);
+            //}
+        } else {
+            $this->generateClassID($this->sel_class);
         }
-        // Altrimenti sel_class conterrà l'ID della classe da ritornare 
-        return $this->generateClassDetermed($this->sel_class);
     }
 
     /**
@@ -61,12 +68,130 @@ class GenerateClass {
 
     /**
      *  Sceglie una classe per il personaggio
-     * @param {} sel_class L'ID della classe
+     * @param {} scores Abilità del personaggio
      * @return {} ritorna la query generata contenente la classe del personaggio
      */
-    private function generateClassDetermed($sel_class) {
-        // Faccio una query di tutti i nomi di una determinata razza e genere, li randomizzo e ne prendo 1
-        $queryClass = "SELECT * FROM classes WHERE ID = '$sel_class'";
+    private function generateClassDetermed($scores) {
+        // Scelgo quale razza in base alle scores e faccio la query
+        $ID = $this->scegliClasse($scores);
+        // Se id è -30 c'è un errore
+        if ($ID == -30) {
+            return -30;
+        }
+
+        $queryClass = "SELECT * FROM classes WHERE ID = '$ID'";
+        $result = $this->conn->query($queryClass);
+        // Contollo che abbia trovato qualcosa
+        if ($result->num_rows <= 0) {
+            return -30;
+        }
+        $this->class = $result->fetch_assoc();
+
+        // Leggo i parametri dalla query
+        $this->name = $this->class["name"];
+        $this->description = $this->class["description"];
+        $this->hit_dice = $this->class["hit_dice"];
+        $this->primary_ability = $this->class["primary_ability"];
+        $this->saving_throws = $this->convertJson($this->class["saving_throws"]);
+        $this->armor_weapons = $this->convertJson($this->class["armor_weapons"]);
+
+        // Return risultato query
+        return $result;
+    }
+
+    /**
+     *  Sceglie una classe per il personaggio
+     * @param {} scores Abilità del personaggio
+     * @return {} ritorna l'id della clsse
+     */
+    private function scegliClasse($scores) {
+        // SCORES: Strength(0), Dexterity(1), Constitution(2), Intelligence(3), Wisdom(4), Charisma(5)
+
+        // CLASSES: Strength(1), Charisma(2), Wisdom(3), Wisdom(4), Strength or Dexterity(5), Dexterity & Wisdom(6),
+        //          Strength & Charisma(7), Dexterity & Wisdom(8), Dexterity(9), Charisma(10), Charisma(11), Intelligence(12)
+
+        $max = $scores[0];
+        $Imax = 0;
+        $max2 = 0;
+        $Imax2 = 0;
+
+        for ($i = 1; $i < count($scores); $i++) {
+            if ($i != 2) {
+                if ($max < $scores[$i]) {
+                    $max = $scores[$i];
+                    $Imax = $i;
+                } else if ($max2 < $scores[$i]) {
+                    $max2 = $scores[$i];
+                    $Imax2 = $i;
+                }
+            }
+        }
+
+        if (($Imax == 0 && $Imax2 == 1) || $Imax == 1 && $Imax2 == 0) {
+            // Fighter (5)
+            return 5;
+        } else if (($Imax == 1 && $Imax2 == 4) || ($Imax == 4 && $Imax2 == 1)) {
+            switch (rand(0, 1)) {
+                case 0:
+                    // Monk (6)
+                    return 6;
+                    break;
+                case 1:
+                    // Ranger (8)
+                    return 8;
+                    break;
+            }
+        } else if (($Imax == 0 && $Imax2 == 5) || ($Imax == 5 && $Imax2 == 0)) {
+            // Monk (7)
+            return 7;
+        } else if ($Imax == 0) {
+            // Barbarian (1)
+            return 1;
+        } else if ($Imax == 1) {
+            // Rogue (9)
+            return 9;
+        } else if ($Imax == 3) {
+            // Rogue (12)
+            return 12;
+        } else if ($Imax == 4) {
+            switch (rand(0, 1)) {
+                case 0:
+                    // Cleric (3)
+                    return 3;
+                    break;
+                case 1:
+                    // Druid (4)
+                    return 4;
+                    break;
+            }
+        } else if ($Imax == 5) {
+            switch (rand(0, 2)) {
+                case 0:
+                    // Bard (2)
+                    return 2;
+                    break;
+                case 1:
+                    // Sorcerer (10)
+                    return 10;
+                    break;
+                case 2:
+                    // Warlock (11)
+                    return 11;
+                    break;
+            }
+        } else {
+            return -30;
+        }
+    }
+
+    /**
+     *  Sceglie una classe in base all'ID
+     * @param {} ID della classe
+     * @return {} ritorna la query generata contenente la classe del personaggio
+     */
+    private function generateClassID($ID) {
+        // Scelgo quale razza in base all'iD
+        $queryClass = "SELECT * FROM classes WHERE ID = '$ID'";
         $result = $this->conn->query($queryClass);
         // Contollo che abbia trovato qualcosa
         if ($result->num_rows <= 0) {
@@ -92,6 +217,14 @@ class GenerateClass {
      */
     public function setSel_class($sel_class) {
         $this->sel_class = $sel_class;
+    }
+
+    /**
+     * Setta la variabile scores
+     * @param {Array[int]} Contiene le abilità del personaggio
+     */
+    public function setScores($scores) {
+        $this->scores = $scores;
     }
 
     /**

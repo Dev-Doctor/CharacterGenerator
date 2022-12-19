@@ -23,13 +23,11 @@ class GenerateNames {
   public function Generate() {
     $this->name = $this->generateName($this->conn, $this->race, $this->gender);
     if ($this->name == -30) {
-      //echo "Nessun nome";
       return -30;
     }
 
     $this->lastname = $this->generateLastname($this->conn, $this->race);
     if ($this->lastname == -30) {
-      //echo "Nessun cognome";
       return -30;
     }
   }
