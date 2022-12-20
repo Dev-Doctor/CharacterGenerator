@@ -56,6 +56,7 @@ class Character {
         $this->traits->Generate($this->race->GetRaceID());
 
         // GENERATE CLASS
+        $this->class->setScores($this->ability_scores->GetScores());
         $this->class->Generate();
 
         // GENERATE PERSONALITY
